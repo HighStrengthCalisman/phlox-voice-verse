@@ -50,10 +50,10 @@ export const Agents = () => {
               return (
                 <div
                   ref={ref}
-                  className={`glass-card p-8 rounded-2xl hover:scale-105 transition-all duration-300 group ${
+                  className={`glass-card p-8 rounded-2xl hover:scale-105 transition-all duration-500 group ${
                     isVisible ? 'animate-bounce-in' : 'opacity-0'
                   }`}
-                  style={{ animationDelay: `${index * 0.15}s` }}
+                  style={{ animationDelay: `${index * 0.2}s` }}
                 >
                   <div className="bg-gradient-to-br from-primary to-accent p-4 rounded-xl w-16 h-16 flex items-center justify-center mb-6 shadow-[var(--glow-primary)] group-hover:animate-float">
                     <agent.icon className="h-8 w-8 text-white" />

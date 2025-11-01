@@ -36,7 +36,7 @@ const plans = [
 
 export const Plans = () => {
   return (
-    <section id="plans" className="py-24 px-6 relative">
+    <section id="plans" className="py-24 px-4 sm:px-6 relative">
       <div className="container mx-auto max-w-6xl">
         <div className="text-center mb-16 animate-fade-in-up">
           <h2 className="text-5xl md:text-6xl font-black mb-6 gradient-text">
@@ -47,7 +47,7 @@ export const Plans = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        <div className="grid md:grid-cols-2 gap-6 sm:gap-8 max-w-5xl mx-auto px-2 sm:px-0">
           {plans.map((plan, index) => {
             const PlanCard = () => {
               const { ref, isVisible } = useIntersectionObserver();
@@ -56,14 +56,14 @@ export const Plans = () => {
                 <div
                   key={index}
                   ref={ref}
-                  className={`glass-card p-10 rounded-2xl transition-all duration-300 ${
+                  className={`glass-card p-6 sm:p-10 rounded-2xl transition-all duration-500 ${
                     isVisible ? 'animate-zoom-in' : 'opacity-0'
                   } ${
                     plan.highlighted
-                      ? "border-2 border-primary shadow-[var(--glow-primary)] scale-105"
+                      ? "border-2 border-primary shadow-[var(--glow-primary)] md:scale-105"
                       : "hover:scale-105"
                   }`}
-                  style={{ animationDelay: `${index * 0.2}s` }}
+                  style={{ animationDelay: `${index * 0.3}s` }}
                 >
               {plan.highlighted && (
                 <div className="bg-gradient-to-r from-primary to-accent text-white px-4 py-2 rounded-full text-sm font-black inline-block mb-4">

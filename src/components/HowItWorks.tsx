@@ -58,9 +58,9 @@ export const HowItWorks = () => {
                   key={index} 
                   ref={ref}
                   className={`relative ${isVisible ? (isEven ? 'animate-slide-in-left' : 'animate-slide-in-right') : 'opacity-0'}`}
-                  style={{ animationDelay: `${(index % 3) * 0.1}s` }}
+                  style={{ animationDelay: `${(index % 3) * 0.2}s` }}
                 >
-                  <div className="glass-card p-8 rounded-2xl hover:scale-105 transition-all duration-300 group">
+                  <div className="glass-card p-8 rounded-2xl hover:scale-105 transition-all duration-500 group">
                     <div className="bg-gradient-to-br from-accent to-primary p-4 rounded-xl w-16 h-16 flex items-center justify-center mb-6 shadow-[var(--glow-primary)] group-hover:animate-float">
                       <step.icon className="h-8 w-8 text-white" />
                     </div>

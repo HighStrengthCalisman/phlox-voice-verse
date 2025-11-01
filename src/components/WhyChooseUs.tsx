@@ -62,10 +62,10 @@ export const WhyChooseUs = () => {
               return (
                 <div
                   ref={ref}
-                  className={`glass-card p-8 rounded-2xl hover:scale-105 transition-all duration-300 group ${
+                  className={`glass-card p-8 rounded-2xl hover:scale-105 transition-all duration-500 group ${
                     isVisible ? animation : 'opacity-0'
                   }`}
-                  style={{ animationDelay: `${(index % 3) * 0.1}s` }}
+                  style={{ animationDelay: `${(index % 3) * 0.2}s` }}
                 >
                   <div className="bg-gradient-to-br from-secondary to-primary p-4 rounded-xl w-16 h-16 flex items-center justify-center mb-6 shadow-[var(--glow-secondary)] group-hover:animate-float">
                     <feature.icon className="h-8 w-8 text-white" />
