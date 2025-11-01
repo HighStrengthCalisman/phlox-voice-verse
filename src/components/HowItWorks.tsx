@@ -1,4 +1,5 @@
 import { ArrowRight, Phone, Brain, MessageCircle, Mic, FileCheck, Upload } from "lucide-react";
+import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
 
 const steps = [
   {
@@ -47,28 +48,41 @@ export const HowItWorks = () => {
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {steps.map((step, index) => (
-            <div key={index} className="relative animate-fade-in-up" style={{ animationDelay: `${index * 0.1}s` }}>
-              <div className="glass-card p-8 rounded-2xl hover:scale-105 transition-all duration-300 group">
-                <div className="bg-gradient-to-br from-accent to-primary p-4 rounded-xl w-16 h-16 flex items-center justify-center mb-6 shadow-[var(--glow-primary)] group-hover:animate-float">
-                  <step.icon className="h-8 w-8 text-white" />
-                </div>
-                
-                <div className="absolute -top-4 -right-4 w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-black text-xl shadow-[var(--glow-primary)]">
-                  {index + 1}
-                </div>
+          {steps.map((step, index) => {
+            const StepCard = () => {
+              const { ref, isVisible } = useIntersectionObserver();
+              const isEven = index % 2 === 0;
+              
+              return (
+                <div 
+                  key={index} 
+                  ref={ref}
+                  className={`relative ${isVisible ? (isEven ? 'animate-slide-in-left' : 'animate-slide-in-right') : 'opacity-0'}`}
+                  style={{ animationDelay: `${(index % 3) * 0.1}s` }}
+                >
+                  <div className="glass-card p-8 rounded-2xl hover:scale-105 transition-all duration-300 group">
+                    <div className="bg-gradient-to-br from-accent to-primary p-4 rounded-xl w-16 h-16 flex items-center justify-center mb-6 shadow-[var(--glow-primary)] group-hover:animate-float">
+                      <step.icon className="h-8 w-8 text-white" />
+                    </div>
+                    
+                    <div className="absolute -top-4 -right-4 w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-black text-xl shadow-[var(--glow-primary)] animate-bounce-in">
+                      {index + 1}
+                    </div>
 
-                <h3 className="text-xl font-black mb-3 text-foreground">{step.title}</h3>
-                <p className="text-muted-foreground font-bold text-sm">{step.description}</p>
-              </div>
+                    <h3 className="text-xl font-black mb-3 text-foreground">{step.title}</h3>
+                    <p className="text-muted-foreground font-bold text-sm">{step.description}</p>
+                  </div>
 
-              {index < steps.length - 1 && (
-                <div className="hidden lg:flex absolute top-1/2 -right-4 z-10">
-                  <ArrowRight className="h-8 w-8 text-secondary animate-pulse" />
+                  {index < steps.length - 1 && (
+                    <div className="hidden lg:flex absolute top-1/2 -right-4 z-10">
+                      <ArrowRight className="h-8 w-8 text-secondary animate-pulse" />
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
-          ))}
+              );
+            };
+            return <StepCard key={index} />;
+          })}
         </div>
       </div>
     </section>

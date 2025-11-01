@@ -1,5 +1,6 @@
 import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
 
 const plans = [
   {
@@ -47,16 +48,23 @@ export const Plans = () => {
         </div>
 
         <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-          {plans.map((plan, index) => (
-            <div
-              key={index}
-              className={`glass-card p-10 rounded-2xl transition-all duration-300 animate-fade-in-up ${
-                plan.highlighted
-                  ? "border-2 border-primary shadow-[var(--glow-primary)] scale-105"
-                  : "hover:scale-105"
-              }`}
-              style={{ animationDelay: `${index * 0.2}s` }}
-            >
+          {plans.map((plan, index) => {
+            const PlanCard = () => {
+              const { ref, isVisible } = useIntersectionObserver();
+              
+              return (
+                <div
+                  key={index}
+                  ref={ref}
+                  className={`glass-card p-10 rounded-2xl transition-all duration-300 ${
+                    isVisible ? 'animate-zoom-in' : 'opacity-0'
+                  } ${
+                    plan.highlighted
+                      ? "border-2 border-primary shadow-[var(--glow-primary)] scale-105"
+                      : "hover:scale-105"
+                  }`}
+                  style={{ animationDelay: `${index * 0.2}s` }}
+                >
               {plan.highlighted && (
                 <div className="bg-gradient-to-r from-primary to-accent text-white px-4 py-2 rounded-full text-sm font-black inline-block mb-4">
                   MOST POPULAR
@@ -80,17 +88,20 @@ export const Plans = () => {
                 ))}
               </ul>
 
-              <Button
-                className={`w-full text-lg font-black py-6 rounded-xl transition-all ${
-                  plan.highlighted
-                    ? "bg-gradient-to-r from-primary to-accent hover:opacity-90 text-white shadow-[var(--glow-primary)]"
-                    : "glass-card hover:bg-white/10"
-                }`}
-              >
-                {plan.highlighted ? "Get Custom Plan" : "Start Basic Plan"}
-              </Button>
-            </div>
-          ))}
+                <Button
+                  className={`w-full text-lg font-black py-6 rounded-xl transition-all ${
+                    plan.highlighted
+                      ? "bg-gradient-to-r from-primary to-accent hover:opacity-90 text-white shadow-[var(--glow-primary)]"
+                      : "glass-card hover:bg-white/10"
+                  }`}
+                >
+                  {plan.highlighted ? "Get Custom Plan" : "Start Basic Plan"}
+                </Button>
+              </div>
+            );
+          };
+          return <PlanCard key={index} />;
+        })}
         </div>
       </div>
     </section>

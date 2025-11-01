@@ -1,4 +1,5 @@
 import { Phone, RefreshCw, Bell, MessageSquare, Wrench, QrCode } from "lucide-react";
+import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
 
 const agents = [
   {
@@ -42,24 +43,33 @@ export const Agents = () => {
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          {agents.map((agent, index) => (
-            <div
-              key={index}
-              className="glass-card p-8 rounded-2xl hover:scale-105 transition-all duration-300 animate-fade-in-up group"
-              style={{ animationDelay: `${index * 0.1}s` }}
-            >
-              <div className="bg-gradient-to-br from-primary to-accent p-4 rounded-xl w-16 h-16 flex items-center justify-center mb-6 shadow-[var(--glow-primary)] group-hover:animate-float">
-                <agent.icon className="h-8 w-8 text-white" />
-              </div>
-              <h3 className="text-2xl font-black mb-4 text-foreground">{agent.title}</h3>
-              <p className="text-muted-foreground mb-6 font-bold">{agent.description}</p>
+          {agents.map((agent, index) => {
+            const AgentCard = () => {
+              const { ref, isVisible } = useIntersectionObserver();
               
-              <div className="glass-card p-4 rounded-xl flex items-center justify-center gap-2 border-dashed">
-                <QrCode className="h-6 w-6 text-secondary" />
-                <span className="text-sm font-bold text-muted-foreground">Scan to Experience Demo</span>
-              </div>
-            </div>
-          ))}
+              return (
+                <div
+                  ref={ref}
+                  className={`glass-card p-8 rounded-2xl hover:scale-105 transition-all duration-300 group ${
+                    isVisible ? 'animate-bounce-in' : 'opacity-0'
+                  }`}
+                  style={{ animationDelay: `${index * 0.15}s` }}
+                >
+                  <div className="bg-gradient-to-br from-primary to-accent p-4 rounded-xl w-16 h-16 flex items-center justify-center mb-6 shadow-[var(--glow-primary)] group-hover:animate-float">
+                    <agent.icon className="h-8 w-8 text-white" />
+                  </div>
+                  <h3 className="text-2xl font-black mb-4 text-foreground">{agent.title}</h3>
+                  <p className="text-muted-foreground mb-6 font-bold">{agent.description}</p>
+                  
+                  <div className="glass-card p-4 rounded-xl flex items-center justify-center gap-2 border-dashed">
+                    <QrCode className="h-6 w-6 text-secondary" />
+                    <span className="text-sm font-bold text-muted-foreground">Scan to Experience Demo</span>
+                  </div>
+                </div>
+              );
+            };
+            return <AgentCard key={index} />;
+          })}
         </div>
 
         <div className="text-center glass-card p-6 rounded-2xl max-w-2xl mx-auto">
