@@ -43,7 +43,8 @@ export const SpaceBackground = () => {
     // Animation loop
     let animationId: number;
     const animate = () => {
-      ctx.fillStyle = 'rgba(15, 23, 42, 0.1)';
+      // Pure black background
+      ctx.fillStyle = 'rgba(5, 5, 15, 0.15)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       stars.forEach((star) => {
@@ -67,11 +68,14 @@ export const SpaceBackground = () => {
         if (px >= 0 && px <= canvas.width && py >= 0 && py <= canvas.height) {
           const opacity = 1 - star.z / 1000;
           
-          // Gradient color based on position
-          const hue = 190 + (star.z / 1000) * 100; // Cyan to purple
-          ctx.fillStyle = `hsla(${hue}, 100%, 60%, ${opacity})`;
-          ctx.shadowBlur = 10;
-          ctx.shadowColor = `hsla(${hue}, 100%, 60%, ${opacity * 0.8})`;
+          // Purple to pink gradient for stars
+          const hue = 270 + (star.z / 1000) * 50; // Purple to pink range
+          const saturation = 90 + (1 - star.z / 1000) * 10;
+          const lightness = 60 + (1 - star.z / 1000) * 20;
+          
+          ctx.fillStyle = `hsla(${hue}, ${saturation}%, ${lightness}%, ${opacity})`;
+          ctx.shadowBlur = 12;
+          ctx.shadowColor = `hsla(${hue}, 100%, 70%, ${opacity * 0.9})`;
           
           ctx.beginPath();
           ctx.arc(px, py, size, 0, Math.PI * 2);
@@ -79,8 +83,8 @@ export const SpaceBackground = () => {
           
           // Add star twinkle effect
           if (Math.random() > 0.98) {
-            ctx.shadowBlur = 20;
-            ctx.fillStyle = `hsla(${hue}, 100%, 80%, ${opacity})`;
+            ctx.shadowBlur = 25;
+            ctx.fillStyle = `hsla(${hue}, 100%, 85%, ${opacity})`;
             ctx.beginPath();
             ctx.arc(px, py, size * 1.5, 0, Math.PI * 2);
             ctx.fill();

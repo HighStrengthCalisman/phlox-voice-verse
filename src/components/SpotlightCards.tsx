@@ -16,7 +16,34 @@ export const SpotlightCards = ({ cards, showQR }: SpotlightCardsProps) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   return (
-    <div className="relative min-h-[500px] flex items-center justify-center px-4">
+    <div className="relative min-h-[600px] flex items-center justify-center px-4">
+      {/* Top lighting beam */}
+      <div 
+        className="absolute top-0 left-1/2 transform -translate-x-1/2 w-96 h-96 pointer-events-none"
+        style={{
+          background: 'radial-gradient(ellipse at center, rgba(200, 100, 255, 0.3) 0%, transparent 60%)',
+          filter: 'blur(40px)',
+        }}
+      />
+      
+      {/* Bottom platform light */}
+      <div 
+        className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-[600px] h-2 pointer-events-none rounded-full"
+        style={{
+          background: 'linear-gradient(90deg, transparent, rgba(200, 100, 255, 0.8) 20%, rgba(255, 100, 200, 0.8) 50%, rgba(200, 100, 255, 0.8) 80%, transparent)',
+          boxShadow: '0 0 60px rgba(200, 100, 255, 0.6), 0 0 100px rgba(255, 100, 200, 0.4)',
+        }}
+      />
+      
+      {/* Platform glow */}
+      <div 
+        className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-[500px] h-32 pointer-events-none"
+        style={{
+          background: 'radial-gradient(ellipse at center top, rgba(200, 100, 255, 0.2) 0%, transparent 70%)',
+          filter: 'blur(30px)',
+        }}
+      />
+      
       {/* Background cards */}
       <div className="absolute inset-0 flex items-center justify-center gap-4 perspective-1000">
         {cards.map((card, index) => {
@@ -31,7 +58,7 @@ export const SpotlightCards = ({ cards, showQR }: SpotlightCardsProps) => {
               key={index}
               onClick={() => setSelectedIndex(index)}
               className={`absolute transition-all duration-700 cursor-pointer ${
-                isSelected ? 'z-20' : 'z-10'
+                isSelected ? 'z-20 animate-float-slow' : 'z-10'
               }`}
               style={{
                 transform: isSelected
@@ -42,28 +69,46 @@ export const SpotlightCards = ({ cards, showQR }: SpotlightCardsProps) => {
               }}
             >
               <div
-                className={`glass-card rounded-2xl p-8 w-[320px] transition-all duration-500 ${
+                className={`glass-card rounded-2xl p-8 w-[320px] transition-all duration-500 relative overflow-hidden ${
                   isSelected
-                    ? 'shadow-[0_0_60px_rgba(0,200,255,0.5)] border-2 border-primary'
-                    : 'shadow-[0_0_20px_rgba(0,200,255,0.2)]'
+                    ? 'shadow-[0_0_80px_rgba(200,100,255,0.7),0_0_120px_rgba(255,100,200,0.5)] border-2 border-primary'
+                    : 'shadow-[0_0_30px_rgba(150,80,200,0.3)]'
                 }`}
                 style={{
                   background: isSelected
-                    ? 'linear-gradient(135deg, rgba(0, 200, 255, 0.15), rgba(168, 85, 247, 0.15))'
-                    : 'rgba(30, 41, 59, 0.4)',
+                    ? 'linear-gradient(180deg, rgba(100, 50, 150, 0.3) 0%, rgba(80, 40, 120, 0.4) 50%, rgba(120, 60, 180, 0.3) 100%)'
+                    : 'rgba(30, 20, 50, 0.5)',
                 }}
               >
+                {/* Top light beam hitting card */}
+                {isSelected && (
+                  <>
+                    <div 
+                      className="absolute -top-32 left-1/2 transform -translate-x-1/2 w-40 h-40 pointer-events-none"
+                      style={{
+                        background: 'radial-gradient(ellipse at center, rgba(200, 100, 255, 0.4) 0%, transparent 70%)',
+                        filter: 'blur(20px)',
+                      }}
+                    />
+                    <div 
+                      className="absolute -bottom-8 left-0 right-0 h-12 pointer-events-none"
+                      style={{
+                        background: 'linear-gradient(to top, rgba(200, 100, 255, 0.3), transparent)',
+                        filter: 'blur(10px)',
+                      }}
+                    />
+                  </>
+                )}
+              
                 <div
-                  className={`p-4 rounded-xl w-16 h-16 flex items-center justify-center mb-6 transition-all duration-500 ${
-                    isSelected ? 'animate-float' : ''
-                  }`}
+                  className="p-4 rounded-xl w-16 h-16 flex items-center justify-center mb-6 transition-all duration-500 relative"
                   style={{
                     background: isSelected
-                      ? 'linear-gradient(135deg, hsl(190 100% 50%), hsl(280 85% 55%))'
-                      : 'linear-gradient(135deg, hsl(200 80% 40%), hsl(260 70% 45%))',
+                      ? 'linear-gradient(135deg, hsl(280 100% 70%), hsl(320 95% 65%))'
+                      : 'linear-gradient(135deg, hsl(270 80% 50%), hsl(290 80% 55%))',
                     boxShadow: isSelected
-                      ? '0 0 40px rgba(0, 200, 255, 0.6)'
-                      : '0 0 15px rgba(0, 200, 255, 0.3)',
+                      ? '0 0 50px rgba(200, 100, 255, 0.8), 0 0 80px rgba(255, 100, 200, 0.5)'
+                      : '0 0 20px rgba(150, 80, 200, 0.4)',
                   }}
                 >
                   <card.icon className="h-8 w-8 text-white" />
