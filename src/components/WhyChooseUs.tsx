@@ -1,5 +1,4 @@
 import { Clock, Globe, Code, Cpu, FileText, Database, Workflow } from "lucide-react";
-import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
 
 const features = [
   {
@@ -53,30 +52,18 @@ export const WhyChooseUs = () => {
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {features.map((feature, index) => {
-            const FeatureCard = () => {
-              const { ref, isVisible } = useIntersectionObserver();
-              const animations = ['animate-zoom-in', 'animate-slide-in-left', 'animate-rotate-in'];
-              const animation = animations[index % animations.length];
-              
-              return (
-                <div
-                  ref={ref}
-                  className={`glass-card p-8 rounded-2xl hover:scale-105 transition-all duration-500 group ${
-                    isVisible ? animation : 'opacity-0'
-                  }`}
-                  style={{ animationDelay: `${(index % 3) * 0.2}s` }}
-                >
-                  <div className="bg-gradient-to-br from-secondary to-primary p-4 rounded-xl w-16 h-16 flex items-center justify-center mb-6 shadow-[var(--glow-secondary)] group-hover:animate-float">
-                    <feature.icon className="h-8 w-8 text-white" />
-                  </div>
-                  <h3 className="text-xl font-black mb-3 text-foreground">{feature.title}</h3>
-                  <p className="text-muted-foreground font-bold text-sm">{feature.description}</p>
-                </div>
-              );
-            };
-            return <FeatureCard key={index} />;
-          })}
+          {features.map((feature, index) => (
+            <div
+              key={index}
+              className="glass-card p-8 rounded-2xl hover:scale-105 transition-all duration-300 group"
+            >
+              <div className="bg-gradient-to-br from-secondary to-primary p-4 rounded-xl w-16 h-16 flex items-center justify-center mb-6 shadow-[var(--glow-secondary)] group-hover:animate-float">
+                <feature.icon className="h-8 w-8 text-white" />
+              </div>
+              <h3 className="text-xl font-black mb-3 text-foreground">{feature.title}</h3>
+              <p className="text-muted-foreground font-bold text-sm">{feature.description}</p>
+            </div>
+          ))}
         </div>
       </div>
     </section>
