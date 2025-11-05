@@ -6,6 +6,8 @@ interface Star {
   z: number;
   size: number;
   speed: number;
+  hue: number;
+  hueSpeed: number;
 }
 
 export const SpaceBackground = () => {
@@ -26,17 +28,20 @@ export const SpaceBackground = () => {
     updateSize();
     window.addEventListener('resize', updateSize);
 
-    // Create stars
+    // Create stars with mixed purple and pink colors
     const stars: Star[] = [];
     const numStars = 200;
     
     for (let i = 0; i < numStars; i++) {
+      const isPurple = Math.random() > 0.5;
       stars.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
         z: Math.random() * 1000,
         size: Math.random() * 2 + 0.5,
         speed: Math.random() * 0.5 + 0.1,
+        hue: isPurple ? 270 : 310,
+        hueSpeed: (Math.random() - 0.5) * 0.3,
       });
     }
 
@@ -51,11 +56,18 @@ export const SpaceBackground = () => {
         // Move star
         star.z -= star.speed;
         
+        // Animate hue transition between purple and pink
+        star.hue += star.hueSpeed;
+        if (star.hue < 260) star.hue = 320;
+        if (star.hue > 320) star.hue = 260;
+        
         // Reset star if it goes past screen
         if (star.z <= 0) {
           star.z = 1000;
           star.x = Math.random() * canvas.width;
           star.y = Math.random() * canvas.height;
+          const isPurple = Math.random() > 0.5;
+          star.hue = isPurple ? 270 : 310;
         }
 
         // Calculate 3D projection
@@ -68,14 +80,13 @@ export const SpaceBackground = () => {
         if (px >= 0 && px <= canvas.width && py >= 0 && py <= canvas.height) {
           const opacity = 1 - star.z / 1000;
           
-          // Purple to pink gradient for stars
-          const hue = 270 + (star.z / 1000) * 50; // Purple to pink range
+          // Use the star's own hue with depth-based adjustments
           const saturation = 90 + (1 - star.z / 1000) * 10;
           const lightness = 60 + (1 - star.z / 1000) * 20;
           
-          ctx.fillStyle = `hsla(${hue}, ${saturation}%, ${lightness}%, ${opacity})`;
+          ctx.fillStyle = `hsla(${star.hue}, ${saturation}%, ${lightness}%, ${opacity})`;
           ctx.shadowBlur = 12;
-          ctx.shadowColor = `hsla(${hue}, 100%, 70%, ${opacity * 0.9})`;
+          ctx.shadowColor = `hsla(${star.hue}, 100%, 70%, ${opacity * 0.9})`;
           
           ctx.beginPath();
           ctx.arc(px, py, size, 0, Math.PI * 2);
@@ -84,7 +95,7 @@ export const SpaceBackground = () => {
           // Add star twinkle effect
           if (Math.random() > 0.98) {
             ctx.shadowBlur = 25;
-            ctx.fillStyle = `hsla(${hue}, 100%, 85%, ${opacity})`;
+            ctx.fillStyle = `hsla(${star.hue}, 100%, 85%, ${opacity})`;
             ctx.beginPath();
             ctx.arc(px, py, size * 1.5, 0, Math.PI * 2);
             ctx.fill();
