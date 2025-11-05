@@ -1,20 +1,24 @@
 import { useState } from 'react';
 import { LucideIcon } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { useNavigate } from 'react-router-dom';
 
 interface Card {
   icon: LucideIcon;
   title: string;
   description: string;
+  route?: string;
 }
 
 interface SpotlightCardsProps {
   cards: Card[];
-  showQR?: boolean;
+  showExploreButton?: boolean;
 }
 
-export const SpotlightCards = ({ cards, showQR }: SpotlightCardsProps) => {
+export const SpotlightCards = ({ cards, showExploreButton }: SpotlightCardsProps) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const navigate = useNavigate();
 
   const handleCardChange = (newIndex: number) => {
     if (isTransitioning) return;
@@ -150,7 +154,7 @@ export const SpotlightCards = ({ cards, showQR }: SpotlightCardsProps) => {
                 </div>
 
                 <h3
-                  className={`text-2xl font-black mb-4 transition-all duration-500 ${
+                  className={`text-3xl font-black mb-4 transition-all duration-500 ${
                     isSelected ? 'text-primary text-glow' : 'text-foreground'
                   }`}
                 >
@@ -165,13 +169,13 @@ export const SpotlightCards = ({ cards, showQR }: SpotlightCardsProps) => {
                   {card.description}
                 </p>
 
-                {showQR && isSelected && (
-                  <div className="mt-6 glass-card p-4 rounded-xl flex items-center justify-center gap-2 border-dashed border-primary">
-                    <div className="h-6 w-6 bg-primary/20 rounded" />
-                    <span className="text-sm font-bold text-primary">
-                      Scan to Experience Demo
-                    </span>
-                  </div>
+                {showExploreButton && isSelected && card.route && (
+                  <Button
+                    onClick={() => navigate(card.route!)}
+                    className="mt-6 w-full bg-gradient-to-r from-primary to-accent hover:opacity-90 text-white font-black shadow-[var(--glow-primary)]"
+                  >
+                    Explore More
+                  </Button>
                 )}
               </div>
             </div>

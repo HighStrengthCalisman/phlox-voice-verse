@@ -52,7 +52,7 @@ export const WhyChooseUs = () => {
           </p>
         </div>
 
-        <SpotlightCards cards={features} showQR={false} />
+        <SpotlightCards cards={features} showExploreButton={false} />
       </div>
     </section>
   );

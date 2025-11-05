@@ -6,26 +6,31 @@ const agents = [
     icon: Phone,
     title: "Service Calling Agent",
     description: "Handles customer service calls with natural, human-like conversations 24/7.",
+    route: "/agent/service-calling",
   },
   {
     icon: MessageSquare,
     title: "Follow-Up Agent",
     description: "Automatically follows up with leads and customers to maintain engagement.",
+    route: "/agent/follow-up",
   },
   {
     icon: RefreshCw,
     title: "Renewal Agent",
     description: "Manages subscription renewals and contract extensions seamlessly.",
+    route: "/agent/renewal",
   },
   {
     icon: Bell,
     title: "Reminding Agent",
     description: "Sends timely reminders for appointments, payments, and important dates.",
+    route: "/agent/reminding",
   },
   {
     icon: Wrench,
     title: "Custom Agent",
     description: "Tailored voice agents programmed for your specific business needs.",
+    route: "/agent/custom",
   },
 ];
 
@@ -42,7 +47,7 @@ export const Agents = () => {
           </p>
         </div>
 
-        <SpotlightCards cards={agents} showQR={true} />
+        <SpotlightCards cards={agents} showExploreButton={true} />
 
         <div className="text-center glass-card p-6 rounded-2xl max-w-2xl mx-auto">
           <p className="text-lg font-black text-foreground">
