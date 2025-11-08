@@ -1,4 +1,11 @@
 import { Clock, Globe, Code, Cpu, FileText, Database, Workflow } from "lucide-react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 const features = [
   {
@@ -55,50 +62,58 @@ export const WhyChooseUs = () => {
           </p>
         </div>
 
-        {/* Hexagonal Grid Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative">
-          {features.map((feature, index) => (
-            <div
-              key={index}
-              className="group relative animate-fade-in-up"
-              style={{ animationDelay: `${index * 0.1}s` }}
-            >
-              {/* Card Container */}
-              <div className="relative h-full p-8 rounded-3xl bg-gradient-to-br from-background/40 to-background/20 backdrop-blur-xl border border-primary/20 transition-all duration-500 hover:border-primary/60 hover:shadow-[0_0_60px_rgba(180,100,255,0.4)] overflow-hidden">
-                {/* Animated gradient overlay on hover */}
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/0 via-primary/5 to-secondary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                
-                {/* Shine effect */}
-                <div className="absolute top-0 -right-full w-full h-full bg-gradient-to-l from-white/10 to-transparent skew-x-12 group-hover:right-full transition-all duration-700" />
-                
-                {/* Icon with glow */}
-                <div className="relative mb-6">
-                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-secondary p-0.5 group-hover:scale-110 transition-transform duration-500">
-                    <div className="w-full h-full rounded-2xl bg-background/90 flex items-center justify-center">
-                      <feature.icon className="h-8 w-8 text-primary group-hover:text-secondary transition-colors duration-500" />
+        {/* Feature Carousel */}
+        <Carousel
+          opts={{
+            align: "start",
+            loop: true,
+          }}
+          className="w-full max-w-6xl mx-auto"
+        >
+          <CarouselContent className="-ml-4">
+            {features.map((feature, index) => (
+              <CarouselItem key={index} className="pl-4 md:basis-1/2 lg:basis-1/3">
+                <div className="group relative animate-fade-in-up h-full">
+                  {/* Card Container */}
+                  <div className="relative h-full p-8 rounded-3xl bg-gradient-to-br from-background/40 to-background/20 backdrop-blur-xl border border-primary/20 transition-all duration-500 hover:border-primary/60 hover:shadow-[0_0_60px_rgba(180,100,255,0.4)] overflow-hidden">
+                    {/* Animated gradient overlay on hover */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/0 via-primary/5 to-secondary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    
+                    {/* Shine effect */}
+                    <div className="absolute top-0 -right-full w-full h-full bg-gradient-to-l from-white/10 to-transparent skew-x-12 group-hover:right-full transition-all duration-700" />
+                    
+                    {/* Icon with glow */}
+                    <div className="relative mb-6">
+                      <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-secondary p-0.5 group-hover:scale-110 transition-transform duration-500">
+                        <div className="w-full h-full rounded-2xl bg-background/90 flex items-center justify-center">
+                          <feature.icon className="h-8 w-8 text-primary group-hover:text-secondary transition-colors duration-500" />
+                        </div>
+                      </div>
+                      {/* Icon glow */}
+                      <div className="absolute inset-0 bg-primary/30 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                     </div>
+
+                    {/* Content */}
+                    <div className="relative">
+                      <h3 className="text-2xl font-black mb-3 text-foreground group-hover:text-primary transition-colors duration-500">
+                        {feature.title}
+                      </h3>
+                      <p className="text-muted-foreground group-hover:text-foreground/90 transition-colors duration-500 font-semibold leading-relaxed">
+                        {feature.description}
+                      </p>
+                    </div>
+
+                    {/* Decorative corner accents */}
+                    <div className="absolute top-4 right-4 w-8 h-8 border-t-2 border-r-2 border-primary/30 group-hover:border-primary/60 transition-colors duration-500" />
+                    <div className="absolute bottom-4 left-4 w-8 h-8 border-b-2 border-l-2 border-secondary/30 group-hover:border-secondary/60 transition-colors duration-500" />
                   </div>
-                  {/* Icon glow */}
-                  <div className="absolute inset-0 bg-primary/30 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 </div>
-
-                {/* Content */}
-                <div className="relative">
-                  <h3 className="text-2xl font-black mb-3 text-foreground group-hover:text-primary transition-colors duration-500">
-                    {feature.title}
-                  </h3>
-                  <p className="text-muted-foreground group-hover:text-foreground/90 transition-colors duration-500 font-semibold leading-relaxed">
-                    {feature.description}
-                  </p>
-                </div>
-
-                {/* Decorative corner accents */}
-                <div className="absolute top-4 right-4 w-8 h-8 border-t-2 border-r-2 border-primary/30 group-hover:border-primary/60 transition-colors duration-500" />
-                <div className="absolute bottom-4 left-4 w-8 h-8 border-b-2 border-l-2 border-secondary/30 group-hover:border-secondary/60 transition-colors duration-500" />
-              </div>
-            </div>
-          ))}
-        </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious className="hidden md:flex -left-12 bg-background/20 border-primary/30 hover:bg-primary/20 hover:border-primary/60 backdrop-blur-xl" />
+          <CarouselNext className="hidden md:flex -right-12 bg-background/20 border-primary/30 hover:bg-primary/20 hover:border-primary/60 backdrop-blur-xl" />
+        </Carousel>
       </div>
     </section>
   );
