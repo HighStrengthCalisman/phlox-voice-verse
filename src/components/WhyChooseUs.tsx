@@ -6,6 +6,8 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
+import { useRef } from "react";
 
 const features = [
   {
@@ -46,6 +48,14 @@ const features = [
 ];
 
 export const WhyChooseUs = () => {
+  const autoplayPlugin = useRef(
+    Autoplay({
+      delay: 2000,
+      stopOnInteraction: true,
+      stopOnMouseEnter: true,
+    })
+  );
+
   return (
     <section className="py-24 px-6 relative overflow-hidden">
       {/* Ambient glow effects */}
@@ -68,6 +78,7 @@ export const WhyChooseUs = () => {
             align: "start",
             loop: true,
           }}
+          plugins={[autoplayPlugin.current]}
           className="w-full max-w-6xl mx-auto"
         >
           <CarouselContent className="-ml-4">
