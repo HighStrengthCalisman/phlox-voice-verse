@@ -1,4 +1,5 @@
 import { Clock, Globe, Code, Cpu, FileText, Database, Workflow } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import {
   Carousel,
   CarouselContent,
@@ -125,6 +126,16 @@ export const WhyChooseUs = () => {
           <CarouselPrevious className="hidden md:flex -left-12 bg-background/20 border-primary/30 hover:bg-primary/20 hover:border-primary/60 backdrop-blur-xl" />
           <CarouselNext className="hidden md:flex -right-12 bg-background/20 border-primary/30 hover:bg-primary/20 hover:border-primary/60 backdrop-blur-xl" />
         </Carousel>
+
+        {/* Explore Button */}
+        <div className="text-center mt-12 animate-fade-in-up">
+          <Button
+            onClick={() => window.location.href = '/features'}
+            className="bg-gradient-to-r from-primary to-secondary hover:opacity-90 text-white font-black px-8 py-6 text-lg shadow-[0_0_60px_rgba(180,100,255,0.5)] hover:shadow-[0_0_80px_rgba(180,100,255,0.7)] transition-all duration-300"
+          >
+            Explore All Features
+          </Button>
+        </div>
       </div>
     </section>
   );
