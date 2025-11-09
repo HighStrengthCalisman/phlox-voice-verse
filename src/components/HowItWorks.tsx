@@ -1,5 +1,6 @@
 import { Phone, Brain, MessageCircle, Mic, FileCheck, Upload } from "lucide-react";
 import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
+import { useState, useEffect } from "react";
 
 const steps = [
   {
@@ -36,6 +37,22 @@ const steps = [
 
 export const HowItWorks = () => {
   const { ref, isVisible } = useIntersectionObserver({ threshold: 0.2 });
+  const [activeStep, setActiveStep] = useState(-1);
+
+  useEffect(() => {
+    if (isVisible && activeStep === -1) {
+      setActiveStep(0);
+      
+      // Trigger subsequent steps sequentially
+      steps.forEach((_, index) => {
+        if (index > 0) {
+          setTimeout(() => {
+            setActiveStep(index);
+          }, index * 1500);
+        }
+      });
+    }
+  }, [isVisible, activeStep]);
 
   return (
     <section ref={ref} id="how-it-works" className="py-24 px-6 relative">
@@ -68,27 +85,29 @@ export const HowItWorks = () => {
           {/* Connecting Line */}
           <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary via-secondary to-primary opacity-30 hidden md:block" />
           
-          {steps.map((step, index) => (
+          {steps.map((step, index) => {
+            const isStepActive = activeStep >= index;
+            return (
             <div
               key={index}
               className={`relative flex gap-8 mb-16 last:mb-0 group transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
-              style={{ transitionDelay: `${400 + index * 100}ms` }}
+              style={{ transitionDelay: `${index * 100}ms` }}
             >
               {/* Step Number & Icon */}
               <div className="relative flex-shrink-0">
                 <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-secondary p-0.5 transition-transform duration-500 ${
-                  isVisible ? 'scale-110' : 'scale-100'
-                }`} style={{ transitionDelay: `${400 + index * 100 + 300}ms` }}>
+                  isStepActive ? 'scale-110' : 'scale-100'
+                }`}>
                   <div className="w-full h-full rounded-2xl bg-background flex items-center justify-center">
                     <step.icon className={`h-8 w-8 transition-colors duration-500 ${
-                      isVisible ? 'text-secondary' : 'text-primary'
-                    }`} style={{ transitionDelay: `${400 + index * 100 + 300}ms` }} />
+                      isStepActive ? 'text-secondary' : 'text-primary'
+                    }`} />
                   </div>
                 </div>
                 {/* Glow effect */}
                 <div className={`absolute inset-0 bg-primary/30 rounded-2xl blur-xl transition-opacity duration-500 ${
-                  isVisible ? 'opacity-100' : 'opacity-0'
-                }`} style={{ transitionDelay: `${400 + index * 100 + 300}ms` }} />
+                  isStepActive ? 'opacity-100' : 'opacity-0'
+                }`} />
                 
                 {/* Step number badge */}
                 <div className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-xs font-black text-white shadow-lg">
@@ -99,27 +118,28 @@ export const HowItWorks = () => {
               {/* Content */}
               <div className="flex-1 pb-8">
                 <div className={`p-6 rounded-2xl bg-gradient-to-br from-background/40 to-background/20 backdrop-blur-xl border transition-all duration-500 overflow-hidden relative ${
-                  isVisible ? 'border-primary/60 shadow-[0_0_40px_rgba(180,100,255,0.3)]' : 'border-primary/20'
-                }`} style={{ transitionDelay: `${400 + index * 100 + 200}ms` }}>
+                  isStepActive ? 'border-primary/60 shadow-[0_0_40px_rgba(180,100,255,0.3)]' : 'border-primary/20'
+                }`}>
                   {/* Shine effect */}
                   <div className={`absolute top-0 w-full h-full bg-gradient-to-l from-white/10 to-transparent skew-x-12 transition-all duration-1000 ${
-                    isVisible ? 'right-full' : '-right-full'
-                  }`} style={{ transitionDelay: `${400 + index * 100 + 400}ms` }} />
+                    isStepActive ? 'right-full' : '-right-full'
+                  }`} />
                   
                   <h3 className={`text-2xl font-black mb-3 transition-colors duration-500 relative z-10 ${
-                    isVisible ? 'text-primary' : 'text-foreground'
-                  }`} style={{ transitionDelay: `${400 + index * 100 + 500}ms` }}>
+                    isStepActive ? 'text-primary' : 'text-foreground'
+                  }`}>
                     {step.title}
                   </h3>
                   <p className={`font-semibold leading-relaxed transition-colors duration-500 relative z-10 ${
-                    isVisible ? 'text-foreground/90' : 'text-muted-foreground'
-                  }`} style={{ transitionDelay: `${400 + index * 100 + 500}ms` }}>
+                    isStepActive ? 'text-foreground/90' : 'text-muted-foreground'
+                  }`}>
                     {step.description}
                   </p>
                 </div>
               </div>
             </div>
-          ))}
+          );
+          })}
         </div>
       </div>
     </section>
