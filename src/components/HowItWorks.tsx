@@ -76,13 +76,19 @@ export const HowItWorks = () => {
             >
               {/* Step Number & Icon */}
               <div className="relative flex-shrink-0">
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-secondary p-0.5 group-hover:scale-110 transition-transform duration-500">
+                <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-secondary p-0.5 transition-transform duration-500 ${
+                  isVisible ? 'scale-110' : 'scale-100'
+                }`} style={{ transitionDelay: `${400 + index * 100 + 300}ms` }}>
                   <div className="w-full h-full rounded-2xl bg-background flex items-center justify-center">
-                    <step.icon className="h-8 w-8 text-primary group-hover:text-secondary transition-colors duration-500" />
+                    <step.icon className={`h-8 w-8 transition-colors duration-500 ${
+                      isVisible ? 'text-secondary' : 'text-primary'
+                    }`} style={{ transitionDelay: `${400 + index * 100 + 300}ms` }} />
                   </div>
                 </div>
                 {/* Glow effect */}
-                <div className="absolute inset-0 bg-primary/30 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className={`absolute inset-0 bg-primary/30 rounded-2xl blur-xl transition-opacity duration-500 ${
+                  isVisible ? 'opacity-100' : 'opacity-0'
+                }`} style={{ transitionDelay: `${400 + index * 100 + 300}ms` }} />
                 
                 {/* Step number badge */}
                 <div className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-xs font-black text-white shadow-lg">
@@ -92,11 +98,22 @@ export const HowItWorks = () => {
 
               {/* Content */}
               <div className="flex-1 pb-8">
-                <div className="p-6 rounded-2xl bg-gradient-to-br from-background/40 to-background/20 backdrop-blur-xl border border-primary/20 group-hover:border-primary/60 transition-all duration-500 group-hover:shadow-[0_0_40px_rgba(180,100,255,0.3)]">
-                  <h3 className="text-2xl font-black mb-3 text-foreground group-hover:text-primary transition-colors duration-500">
+                <div className={`p-6 rounded-2xl bg-gradient-to-br from-background/40 to-background/20 backdrop-blur-xl border transition-all duration-500 overflow-hidden relative ${
+                  isVisible ? 'border-primary/60 shadow-[0_0_40px_rgba(180,100,255,0.3)]' : 'border-primary/20'
+                }`} style={{ transitionDelay: `${400 + index * 100 + 200}ms` }}>
+                  {/* Shine effect */}
+                  <div className={`absolute top-0 w-full h-full bg-gradient-to-l from-white/10 to-transparent skew-x-12 transition-all duration-1000 ${
+                    isVisible ? 'right-full' : '-right-full'
+                  }`} style={{ transitionDelay: `${400 + index * 100 + 400}ms` }} />
+                  
+                  <h3 className={`text-2xl font-black mb-3 transition-colors duration-500 relative z-10 ${
+                    isVisible ? 'text-primary' : 'text-foreground'
+                  }`} style={{ transitionDelay: `${400 + index * 100 + 500}ms` }}>
                     {step.title}
                   </h3>
-                  <p className="text-muted-foreground group-hover:text-foreground/90 transition-colors duration-500 font-semibold leading-relaxed">
+                  <p className={`font-semibold leading-relaxed transition-colors duration-500 relative z-10 ${
+                    isVisible ? 'text-foreground/90' : 'text-muted-foreground'
+                  }`} style={{ transitionDelay: `${400 + index * 100 + 500}ms` }}>
                     {step.description}
                   </p>
                 </div>

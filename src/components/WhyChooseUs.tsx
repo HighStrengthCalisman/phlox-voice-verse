@@ -90,37 +90,57 @@ export const WhyChooseUs = () => {
               <CarouselItem key={index} className="pl-4 md:basis-1/2 lg:basis-1/3">
                 <div className={`group relative h-full transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: `${index * 100}ms` }}>
                   {/* Card Container */}
-                  <div className="relative h-full p-8 rounded-3xl bg-gradient-to-br from-background/40 to-background/20 backdrop-blur-xl border border-primary/20 transition-all duration-500 hover:border-primary/60 hover:shadow-[0_0_60px_rgba(180,100,255,0.4)] overflow-hidden">
-                    {/* Animated gradient overlay on hover */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary/0 via-primary/5 to-secondary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className={`relative h-full p-8 rounded-3xl bg-gradient-to-br from-background/40 to-background/20 backdrop-blur-xl border transition-all duration-500 overflow-hidden ${
+                    isVisible ? 'border-primary/60 shadow-[0_0_60px_rgba(180,100,255,0.4)]' : 'border-primary/20'
+                  }`}>
+                    {/* Animated gradient overlay */}
+                    <div className={`absolute inset-0 bg-gradient-to-br from-primary/0 via-primary/5 to-secondary/0 transition-opacity duration-500 ${
+                      isVisible ? 'opacity-100' : 'opacity-0'
+                    }`} style={{ transitionDelay: `${index * 100 + 300}ms` }} />
                     
                     {/* Shine effect */}
-                    <div className="absolute top-0 -right-full w-full h-full bg-gradient-to-l from-white/10 to-transparent skew-x-12 group-hover:right-full transition-all duration-700" />
+                    <div className={`absolute top-0 w-full h-full bg-gradient-to-l from-white/10 to-transparent skew-x-12 transition-all duration-1000 ${
+                      isVisible ? 'right-full' : '-right-full'
+                    }`} style={{ transitionDelay: `${index * 100 + 400}ms` }} />
                     
                     {/* Icon with glow */}
                     <div className="relative mb-6">
-                      <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-secondary p-0.5 group-hover:scale-110 transition-transform duration-500">
+                      <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-secondary p-0.5 transition-transform duration-500 ${
+                        isVisible ? 'scale-110' : 'scale-100'
+                      }`} style={{ transitionDelay: `${index * 100 + 500}ms` }}>
                         <div className="w-full h-full rounded-2xl bg-background/90 flex items-center justify-center">
-                          <feature.icon className="h-8 w-8 text-primary group-hover:text-secondary transition-colors duration-500" />
+                          <feature.icon className={`h-8 w-8 transition-colors duration-500 ${
+                            isVisible ? 'text-secondary' : 'text-primary'
+                          }`} style={{ transitionDelay: `${index * 100 + 500}ms` }} />
                         </div>
                       </div>
                       {/* Icon glow */}
-                      <div className="absolute inset-0 bg-primary/30 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                      <div className={`absolute inset-0 bg-primary/30 rounded-2xl blur-xl transition-opacity duration-500 ${
+                        isVisible ? 'opacity-100' : 'opacity-0'
+                      }`} style={{ transitionDelay: `${index * 100 + 500}ms` }} />
                     </div>
 
                     {/* Content */}
                     <div className="relative">
-                      <h3 className="text-2xl font-black mb-3 text-foreground group-hover:text-primary transition-colors duration-500">
+                      <h3 className={`text-2xl font-black mb-3 transition-colors duration-500 ${
+                        isVisible ? 'text-primary' : 'text-foreground'
+                      }`} style={{ transitionDelay: `${index * 100 + 600}ms` }}>
                         {feature.title}
                       </h3>
-                      <p className="text-muted-foreground group-hover:text-foreground/90 transition-colors duration-500 font-semibold leading-relaxed">
+                      <p className={`font-semibold leading-relaxed transition-colors duration-500 ${
+                        isVisible ? 'text-foreground/90' : 'text-muted-foreground'
+                      }`} style={{ transitionDelay: `${index * 100 + 600}ms` }}>
                         {feature.description}
                       </p>
                     </div>
 
                     {/* Decorative corner accents */}
-                    <div className="absolute top-4 right-4 w-8 h-8 border-t-2 border-r-2 border-primary/30 group-hover:border-primary/60 transition-colors duration-500" />
-                    <div className="absolute bottom-4 left-4 w-8 h-8 border-b-2 border-l-2 border-secondary/30 group-hover:border-secondary/60 transition-colors duration-500" />
+                    <div className={`absolute top-4 right-4 w-8 h-8 border-t-2 border-r-2 transition-colors duration-500 ${
+                      isVisible ? 'border-primary/60' : 'border-primary/30'
+                    }`} style={{ transitionDelay: `${index * 100 + 700}ms` }} />
+                    <div className={`absolute bottom-4 left-4 w-8 h-8 border-b-2 border-l-2 transition-colors duration-500 ${
+                      isVisible ? 'border-secondary/60' : 'border-secondary/30'
+                    }`} style={{ transitionDelay: `${index * 100 + 700}ms` }} />
                   </div>
                 </div>
               </CarouselItem>
