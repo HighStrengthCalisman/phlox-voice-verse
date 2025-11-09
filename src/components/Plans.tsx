@@ -1,19 +1,5 @@
-import { Check, CreditCard } from "lucide-react";
-import { SpotlightCards } from "./SpotlightCards";
+import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
-const planCards = [
-  {
-    icon: CreditCard,
-    title: "Basic Plan",
-    description: "₹2,500/month - Perfect for getting started with voice automation",
-  },
-  {
-    icon: CreditCard,
-    title: "Custom Plan",
-    description: "₹4,000/month - Advanced features for growing businesses",
-  },
-];
 
 const plans = [
   {
@@ -60,9 +46,7 @@ export const Plans = () => {
           </p>
         </div>
 
-        <SpotlightCards cards={planCards} showExploreButton={false} />
-
-        <div className="grid md:grid-cols-2 gap-6 sm:gap-8 max-w-5xl mx-auto px-2 sm:px-0 mt-16">
+        <div className="grid md:grid-cols-2 gap-6 sm:gap-8 max-w-5xl mx-auto px-2 sm:px-0">
           {plans.map((plan, index) => (
             <div
               key={index}

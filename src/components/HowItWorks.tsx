@@ -1,4 +1,5 @@
 import { Phone, Brain, MessageCircle, Mic, FileCheck, Upload } from "lucide-react";
+import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
 
 const steps = [
   {
@@ -34,10 +35,12 @@ const steps = [
 ];
 
 export const HowItWorks = () => {
+  const { ref, isVisible } = useIntersectionObserver({ threshold: 0.2 });
+
   return (
-    <section id="how-it-works" className="py-24 px-6 relative">
+    <section ref={ref} id="how-it-works" className="py-24 px-6 relative">
       <div className="container mx-auto max-w-7xl">
-        <div className="text-center mb-16 animate-fade-in-up">
+        <div className={`text-center mb-16 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <h2 className="text-5xl md:text-6xl font-black mb-6 gradient-text">
             How Our Voice Agents Work
           </h2>
@@ -47,7 +50,7 @@ export const HowItWorks = () => {
         </div>
 
         {/* Demo Video Section */}
-        <div className="mb-20 animate-fade-in-up">
+        <div className={`mb-20 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '200ms' }}>
           <div className="relative aspect-video max-w-5xl mx-auto rounded-3xl overflow-hidden border-2 border-primary/30 shadow-[0_0_80px_rgba(180,100,255,0.4)]">
             <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 backdrop-blur-xl flex items-center justify-center">
               <div className="text-center">
@@ -68,8 +71,8 @@ export const HowItWorks = () => {
           {steps.map((step, index) => (
             <div
               key={index}
-              className="relative flex gap-8 mb-16 last:mb-0 animate-fade-in-up group"
-              style={{ animationDelay: `${index * 100}ms` }}
+              className={`relative flex gap-8 mb-16 last:mb-0 group transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+              style={{ transitionDelay: `${400 + index * 100}ms` }}
             >
               {/* Step Number & Icon */}
               <div className="relative flex-shrink-0">

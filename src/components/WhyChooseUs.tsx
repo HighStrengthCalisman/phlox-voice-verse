@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import { useRef } from "react";
+import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
 
 const features = [
   {
@@ -57,14 +58,16 @@ export const WhyChooseUs = () => {
     })
   );
 
+  const { ref, isVisible } = useIntersectionObserver({ threshold: 0.2 });
+
   return (
-    <section className="py-24 px-6 relative overflow-hidden">
+    <section ref={ref} className="py-24 px-6 relative overflow-hidden">
       {/* Ambient glow effects */}
       <div className="absolute top-1/4 left-0 w-96 h-96 bg-primary/20 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-secondary/20 rounded-full blur-[120px] pointer-events-none" />
       
       <div className="container mx-auto max-w-7xl relative z-10">
-        <div className="text-center mb-20 animate-fade-in-up">
+        <div className={`text-center mb-20 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <h2 className="text-5xl md:text-6xl font-black mb-6 gradient-text">
             Why Choose Phlox AI?
           </h2>
@@ -85,7 +88,7 @@ export const WhyChooseUs = () => {
           <CarouselContent className="-ml-4">
             {features.map((feature, index) => (
               <CarouselItem key={index} className="pl-4 md:basis-1/2 lg:basis-1/3">
-                <div className="group relative animate-fade-in-up h-full">
+                <div className={`group relative h-full transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: `${index * 100}ms` }}>
                   {/* Card Container */}
                   <div className="relative h-full p-8 rounded-3xl bg-gradient-to-br from-background/40 to-background/20 backdrop-blur-xl border border-primary/20 transition-all duration-500 hover:border-primary/60 hover:shadow-[0_0_60px_rgba(180,100,255,0.4)] overflow-hidden">
                     {/* Animated gradient overlay on hover */}
@@ -128,7 +131,7 @@ export const WhyChooseUs = () => {
         </Carousel>
 
         {/* Explore Button */}
-        <div className="text-center mt-12 animate-fade-in-up">
+        <div className={`text-center mt-12 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '700ms' }}>
           <Button
             onClick={() => window.location.href = '/features'}
             className="bg-gradient-to-r from-primary to-secondary hover:opacity-90 text-white font-black px-8 py-6 text-lg shadow-[0_0_60px_rgba(180,100,255,0.5)] hover:shadow-[0_0_80px_rgba(180,100,255,0.7)] transition-all duration-300"
