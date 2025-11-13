@@ -1,33 +1,40 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { SpaceBackground } from "@/components/SpaceBackground";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Phone, MessageSquare, RefreshCw, Bell, Wrench } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
+import { ArrowLeft, Phone, MessageSquare, RefreshCw, Bell, Wrench, Edit, Undo } from "lucide-react";
+import { useState } from "react";
 
 const agentData = {
   "service-calling": {
     icon: Phone,
     title: "Service Calling Agent",
     description: "Handles customer service calls with natural, human-like conversations 24/7. Our AI agent understands context, emotion, and intent to provide exceptional customer service.",
+    defaultPrompt: "You are a professional customer service agent for Phlox AI. Your role is to handle incoming customer service calls with empathy, efficiency, and professionalism. Listen carefully to customer concerns, provide clear solutions, and ensure customer satisfaction. Always maintain a friendly and helpful tone.",
   },
   "follow-up": {
     icon: MessageSquare,
     title: "Follow-Up Agent",
     description: "Automatically follows up with leads and customers to maintain engagement. Never miss an opportunity with intelligent, timely follow-ups that convert.",
+    defaultPrompt: "You are a follow-up specialist for Phlox AI. Your role is to reach out to leads and customers who have shown interest in our services. Be personable, remind them of previous conversations, and gently guide them toward the next step in their journey. Ask open-ended questions to re-engage them.",
   },
   "renewal": {
     icon: RefreshCw,
     title: "Renewal Agent",
     description: "Manages subscription renewals and contract extensions seamlessly. Reduce churn and increase revenue with automated renewal conversations.",
+    defaultPrompt: "You are a renewal specialist for Phlox AI. Your role is to contact customers whose subscriptions or contracts are approaching expiration. Highlight the value they've received, offer renewal incentives, and address any concerns they may have. Be persuasive yet respectful.",
   },
   "reminding": {
     icon: Bell,
     title: "Reminding Agent",
     description: "Sends timely reminders for appointments, payments, and important dates. Keep your customers informed and reduce no-shows.",
+    defaultPrompt: "You are a reminder assistant for Phlox AI. Your role is to send timely, friendly reminders to customers about appointments, payments, or important deadlines. Be concise, clear, and courteous. Confirm their availability and offer assistance if they need to reschedule.",
   },
   "custom": {
     icon: Wrench,
     title: "Custom Agent",
     description: "Tailored voice agents programmed for your specific business needs. We build custom solutions that fit your unique workflow.",
+    defaultPrompt: "You are a custom AI agent for Phlox AI. Your role and behavior will be defined by specific business requirements. Adapt to the unique needs of the organization and provide tailored solutions that align with their workflow and goals.",
   },
 };
 
@@ -36,12 +43,19 @@ export default function AgentDetail() {
   const navigate = useNavigate();
   
   const agent = agentType ? agentData[agentType as keyof typeof agentData] : null;
+  const [prompt, setPrompt] = useState(agent?.defaultPrompt || "");
+  const [isEditing, setIsEditing] = useState(false);
 
   if (!agent) {
     return null;
   }
 
   const Icon = agent.icon;
+
+  const handleUndo = () => {
+    setPrompt(agent.defaultPrompt);
+    setIsEditing(false);
+  };
 
   return (
     <div className="min-h-screen relative">
@@ -73,6 +87,43 @@ export default function AgentDetail() {
                 <h1 className="text-4xl md:text-5xl font-black gradient-text">{agent.title}</h1>
               </div>
               <p className="text-lg text-muted-foreground font-bold">{agent.description}</p>
+            </div>
+
+            {/* Agent Prompt Section */}
+            <div className="glass-card rounded-2xl p-8 mb-8 border border-primary/30">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-2xl font-black text-foreground">Agent Prompt</h2>
+                <div className="flex gap-2">
+                  <Button
+                    onClick={() => setIsEditing(!isEditing)}
+                    variant="outline"
+                    size="sm"
+                    className="glass-card text-foreground font-bold hover:bg-white/10"
+                  >
+                    <Edit className="mr-2 h-4 w-4" />
+                    {isEditing ? "Save" : "Edit"}
+                  </Button>
+                  <Button
+                    onClick={handleUndo}
+                    variant="outline"
+                    size="sm"
+                    className="glass-card text-foreground font-bold hover:bg-white/10"
+                  >
+                    <Undo className="mr-2 h-4 w-4" />
+                    Undo
+                  </Button>
+                </div>
+              </div>
+              {isEditing ? (
+                <Textarea
+                  value={prompt}
+                  onChange={(e) => setPrompt(e.target.value)}
+                  className="min-h-[150px] glass-card text-foreground font-medium resize-none"
+                  placeholder="Enter agent prompt..."
+                />
+              ) : (
+                <p className="text-muted-foreground font-medium leading-relaxed">{prompt}</p>
+              )}
             </div>
 
             <div className="glass-card rounded-2xl p-8">
