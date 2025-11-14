@@ -100,7 +100,7 @@ export const SpotlightCards = ({ cards, showExploreButton }: SpotlightCardsProps
               }}
             >
               <div
-                className={`glass-card rounded-2xl p-8 w-[320px] transition-all duration-500 relative overflow-hidden ${
+                className={`glass-card rounded-2xl p-8 w-[320px] min-h-[400px] transition-all duration-500 relative overflow-hidden ${
                   isSelected
                     ? 'shadow-[0_0_80px_rgba(200,100,255,0.7),0_0_120px_rgba(255,100,200,0.5)] border-2 border-primary'
                     : 'shadow-[0_0_30px_rgba(150,80,200,0.3)]'

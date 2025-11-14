@@ -47,7 +47,7 @@ export const Agents = () => {
           </p>
         </div>
 
-        <SpotlightCards cards={agents} showExploreButton={false} />
+        <SpotlightCards cards={agents} showExploreButton={true} />
 
         <div className="text-center glass-card p-6 rounded-2xl max-w-2xl mx-auto">
           <p className="text-lg font-black text-foreground">

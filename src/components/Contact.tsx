@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Mail, Phone, QrCode } from "lucide-react";
+import { Mail, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -16,10 +16,38 @@ export const Contact = () => {
     message: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast.success("Thank you! We'll contact you soon.");
-    setFormData({ name: "", email: "", businessType: "", phone: "", interest: "", message: "" });
+    
+    if (!formData.interest) {
+      toast.error("Please select an agent type you're interested in");
+      return;
+    }
+
+    try {
+      const webhookData = {
+        name: formData.name,
+        email: formData.email,
+        businessType: formData.businessType,
+        phone: formData.phone,
+        interest: formData.interest,
+        message: formData.message,
+      };
+
+      await fetch("https://hook.eu2.make.com/6tz3iboa5z4rpmxmxrfn46qk4waic5io", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(webhookData),
+      });
+
+      toast.success("Thank you! We'll contact you soon.");
+      setFormData({ name: "", email: "", businessType: "", phone: "", interest: "", message: "" });
+    } catch (error) {
+      console.error("Error sending data:", error);
+      toast.error("Something went wrong. Please try again.");
+    }
   };
 
   return (
@@ -41,7 +69,7 @@ export const Contact = () => {
                 <Mail className="h-8 w-8 text-white" />
               </div>
               <h3 className="text-2xl font-black mb-2 text-foreground">Email Us</h3>
-              <p className="text-muted-foreground font-bold">contact@phlox.ai</p>
+              <p className="text-muted-foreground font-bold">phloxlaptop.69.69@gmail.com</p>
             </div>
 
             <div className="glass-card p-8 rounded-2xl">
@@ -49,16 +77,9 @@ export const Contact = () => {
                 <Phone className="h-8 w-8 text-white" />
               </div>
               <h3 className="text-2xl font-black mb-2 text-foreground">Call Us</h3>
-              <p className="text-muted-foreground font-bold">+91 XXXXX XXXXX</p>
+              <p className="text-muted-foreground font-bold">+91 9321687426</p>
             </div>
 
-            <div className="glass-card p-8 rounded-2xl text-center">
-              <div className="bg-gradient-to-br from-accent to-primary p-4 rounded-xl w-16 h-16 flex items-center justify-center mb-6 shadow-[var(--glow-primary)] mx-auto">
-                <QrCode className="h-8 w-8 text-white" />
-              </div>
-              <h3 className="text-2xl font-black mb-2 text-foreground">Try Demo Now</h3>
-              <p className="text-muted-foreground font-bold">Scan to Chat with an AI Demo</p>
-            </div>
           </div>
 
           <div className="glass-card p-8 rounded-2xl animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
@@ -106,7 +127,7 @@ export const Contact = () => {
               </div>
 
               <div>
-                <Select onValueChange={(value) => setFormData({ ...formData, interest: value })}>
+                <Select onValueChange={(value) => setFormData({ ...formData, interest: value })} required>
                   <SelectTrigger className="bg-background/50 border-border text-foreground font-bold">
                     <SelectValue placeholder="I'm interested in..." />
                   </SelectTrigger>
@@ -127,6 +148,7 @@ export const Contact = () => {
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   rows={4}
+                  required
                   className="bg-background/50 border-border text-foreground font-bold"
                 />
               </div>

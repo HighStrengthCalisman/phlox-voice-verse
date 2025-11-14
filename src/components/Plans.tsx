@@ -80,6 +80,10 @@ export const Plans = () => {
               </ul>
 
               <Button
+                onClick={() => {
+                  const contactSection = document.getElementById('contact');
+                  contactSection?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }}
                 className={`w-full text-lg font-black py-6 rounded-xl transition-all ${
                   plan.highlighted
                     ? "bg-gradient-to-r from-primary to-accent hover:opacity-90 text-white shadow-[var(--glow-primary)]"
