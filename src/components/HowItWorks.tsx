@@ -71,7 +71,7 @@ export const HowItWorks = () => {
           <div className="relative aspect-video max-w-5xl mx-auto rounded-3xl overflow-hidden border-2 border-primary/30 shadow-[0_0_80px_rgba(180,100,255,0.4)]">
             {/* Replace the URL below with your Vimeo video link */}
             <iframe
-              src="https://player.vimeo.com/video/YOUR_VIDEO_ID?h=YOUR_HASH&title=0&byline=0&portrait=0"
+              src="https://player.vimeo.com/video/1136644532?title=0&byline=0&portrait=0"
               className="w-full h-full"
               frameBorder="0"
               allow="autoplay; fullscreen; picture-in-picture"
@@ -79,9 +79,6 @@ export const HowItWorks = () => {
               title="How Our Voice Agents Work Demo"
             />
           </div>
-          <p className="text-center text-sm text-muted-foreground mt-4 font-semibold">
-            To update: Replace YOUR_VIDEO_ID in src/components/HowItWorks.tsx with your Vimeo video ID
-          </p>
         </div>
 
         {/* Timeline Process */}
